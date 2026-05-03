@@ -120,6 +120,7 @@ async fn main() -> Result<()> {
         .bind()
         .await?;
     println!("> our endpoint id: {}", endpoint.id());
+    println!("> our topic: {}", topic);
 
     // create the gossip protocol
     let gossip = Gossip::builder().spawn(endpoint.clone());
