@@ -144,17 +144,20 @@ async fn main() -> Result<()> {
         .spawn();
 
     // join the gossip topic by connecting to known peers, if any
-    let peer_ids = peers.iter().map(|p| p.id).collect();
-    if peers.is_empty() {
-        println!("> waiting for peers to join us...");
-    } else {
-        println!("> trying to connect to {} peers...", peers.len());
-        // add the peer addrs from the ticket to our endpoint's addressbook so that they can be dialed
-        for peer in peers.into_iter() {
-            memory_lookup.add_endpoint_info(peer);
-        }
-    };
-    let (sender, receiver) = gossip.subscribe_and_join(topic, peer_ids).await?.split();
+    // let peer_ids = peers.iter().map(|p| p.id).collect();
+    // if peers.is_empty() {
+    //     println!("> waiting for peers to join us...");
+    // } else {
+    //     println!("> trying to connect to {} peers...", peers.len());
+    //     // add the peer addrs from the ticket to our endpoint's addressbook so that they can be dialed
+    //     for peer in peers.into_iter() {
+    //         memory_lookup.add_endpoint_info(peer);
+    //     }
+    // };
+    // let (sender, receiver) = gossip.subscribe_and_join(topic, peer_ids).await?.split();
+    // println!("> connected!");
+
+    let (sender, receiver) = gossip.subscribe(topic, vec![]).await?.split();
     println!("> connected!");
 
     // broadcast our name, if set
